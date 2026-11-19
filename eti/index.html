@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="assets/img/logo-eti.svg">
+<title>Entrar — ETI</title>
+<link href="assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="assets/vendor/bootstrap-icons/bootstrap-icons.min.css" rel="stylesheet">
+<link href="assets/css/eti.css" rel="stylesheet">
+</head>
+<body>
+
+<main class="entrar">
+  <form id="form-login">
+    <img src="assets/img/logo-eti.svg" alt="" width="72" class="d-block mb-4">
+    <h1>Escola Tecnológica Inteligente</h1>
+
+    <label class="perfil mt-4">
+      <input class="form-check-input" type="radio" name="perfil" value="gestor" checked>Gestor
+      <span class="sub">Sala, energia, avisos e relatório</span>
+    </label>
+    <label class="perfil">
+      <input class="form-check-input" type="radio" name="perfil" value="professor">Professor
+      <span class="sub">Sala, energia e painel</span>
+    </label>
+
+    <div class="mt-4 mb-3">
+      <label class="form-label" for="email">E-mail institucional</label>
+      <input class="form-control" type="email" id="email" value="gestor@senai.br" autocomplete="username" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="senha">Senha</label>
+      <input class="form-control" type="password" id="senha" value="demo1234" autocomplete="current-password" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100 py-2">
+      <i class="bi bi-box-arrow-in-right" aria-hidden="true"></i> Entrar
+    </button>
+
+    <p class="legenda mt-4">
+      Versão de demonstração: qualquer senha entra.
+      <a href="painel.html">Abrir o painel de TV</a> não exige acesso.
+    </p>
+  </form>
+</main>
+
+<script src="assets/js/app.js"></script>
+<script>
+document.querySelectorAll('input[name="perfil"]').forEach(function (r) {
+  r.addEventListener('change', function () {
+    document.getElementById('email').value =
+      r.value === 'gestor' ? 'gestor@senai.br' : 'professor@senai.br';
+  });
+});
+
+document.getElementById('form-login').addEventListener('submit', function (e) {
+  e.preventDefault();
+  const perfil = document.querySelector('input[name="perfil"]:checked').value;
+  sessionStorage.setItem('eti:sessao', JSON.stringify({
+    perfil: perfil,
+    email: document.getElementById('email').value,
+    entrouEm: Date.now()
+  }));
+  location.href = 'dashboard.html';
+});
+</script>
+</body>
+</html>
